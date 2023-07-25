@@ -2,6 +2,12 @@ public class App1 {
 
     public static int counter1 = 0;
     public static int counter2 = 0;
+
+    //created my custom objects for locking in the synchronized block
+    //increment() methods now are not using current class' (App1) intrinsic lock
+    private static final Object lock1 = new Object();
+    private static final Object lock2 = new Object();
+
     //have to make sure this method is executed only by a single thread
     //at a given time
 
@@ -10,18 +16,18 @@ public class App1 {
 
     //usually it is not a good practice to use synchronized keyword
     //for method definition
-    
+
 //    public static synchronized void increment1() {
     public static void increment1() {
         //acquire class level lock
         //rule of thumb: we synchronize blocks that are 100% necessary
-        synchronized (App1.class) {
+        synchronized (lock1) {
             counter1++;
         }
     }
 //    public static synchronized void increment2() {
     public static void increment2() {
-        synchronized (App1.class) {
+        synchronized (lock2) {
             counter2++;
         }
     }
