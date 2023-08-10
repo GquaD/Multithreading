@@ -8,7 +8,7 @@ public class TaskApp {
         /*SimpleRecursiveTask task = new SimpleRecursiveTask(10000);
         System.out.println(pool.invoke(task));*/
 
-        FibonacciRecursiveTask task = new FibonacciRecursiveTask(22);
+        FibonacciRecursiveTask task = new FibonacciRecursiveTask(25);
         System.out.println(pool.invoke(task));
 
     }
