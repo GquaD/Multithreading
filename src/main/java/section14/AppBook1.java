@@ -2,6 +2,8 @@ package section14;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class AppBook1 {
     public static void main(String[] args) {
@@ -104,5 +106,54 @@ public class AppBook1 {
                 .flatMap(i -> list2.stream().map(j -> Arrays.asList(i, j)))
                 .toList();
         pairs.forEach(System.out::println);
+
+
+        System.out.println();
+        System.out.println(books.stream().count());
+        List<Integer> nums1 = Arrays.asList(1,2,3,4);
+        System.out.println();
+//        Optional<Integer> res = nums1.stream().reduce(Integer::max);
+//        res.ifPresent(System.out::println);
+        books.stream().map(Book::getPages).reduce(Integer::max).ifPresent(System.out::println);
+        System.out.println();
+
+        //we want to get the longest book
+        books.stream()
+                .reduce((a, b) -> a.getPages() > b.getPages() ? a : b)
+                .ifPresent(System.out::println);
+
+        //sum all pages of all books
+        System.out.println();
+        int total = books.stream().mapToInt(Book::getPages).sum();
+        System.out.println("total: " + total);
+
+        IntStream s = books.stream().mapToInt(Book::getPages);
+        //boxes back to Stream type
+        Stream<Integer> ss = s.boxed();
+
+
+        System.out.println();
+        //OptionalDouble, OptionalLong, OptionalInt
+        OptionalInt max = books.stream().mapToInt(Book::getPages).max();
+        max.ifPresent(System.out::println);
+        System.out.println(max.orElse(0));
+
+        //allMatch(), noneMatch(), findFirst(), findAny()
+
+        boolean res1 = books.stream().allMatch(b -> b.getPages() > 2000);
+        System.out.println(res1);
+
+        res1 = books.stream().noneMatch(b -> b.getPages() > 100);
+        System.out.println(res1);
+
+        books.stream()
+                .filter(b -> b.getType() == Type.HISTORY)
+                .findAny()
+                .ifPresent(System.out::println);
+
+        books.stream()
+                .filter(b -> b.getType() == Type.HISTORY)
+                .findFirst()
+                .ifPresent(System.out::println);
     }
 }
